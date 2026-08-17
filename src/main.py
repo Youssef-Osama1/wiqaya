@@ -7,6 +7,7 @@ from fastapi.responses import JSONResponse
 from src.core.registry import all_doc_specs
 from src.helpers.config import get_settings
 from src.routes import data as data_routes
+from src.routes import nlp as nlp_routes
 from src.stores.bm25_factory import build_bm25_retriever
 from src.stores.embedding_factory import get_embeddings
 from src.stores.llm_factory import get_llm
@@ -29,6 +30,7 @@ APP_TITLE = "Wiqaya"
 app = FastAPI(title=APP_TITLE, lifespan=lifespan)
 
 app.include_router(data_routes.router)
+app.include_router(nlp_routes.router)
 
 
 @app.exception_handler(Exception)
