@@ -1,0 +1,183 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@plugin "@tailwindcss/typography";
+
+@import "@fontsource/space-grotesk/500.css";
+@import "@fontsource/space-grotesk/600.css";
+@import "@fontsource/space-grotesk/700.css";
+@import "@fontsource/public-sans/400.css";
+@import "@fontsource/public-sans/500.css";
+@import "@fontsource/public-sans/600.css";
+@import "@fontsource/space-mono/400.css";
+@import "@fontsource/space-mono/700.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+    --font-heading: "Space Grotesk", ui-sans-serif, sans-serif;
+    --font-sans: "Public Sans", ui-sans-serif, sans-serif;
+    --font-mono: "Space Mono", ui-monospace, monospace;
+
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-warning: var(--warning);
+    --color-warning-foreground: var(--warning-foreground);
+    --color-success: var(--success);
+    --color-success-foreground: var(--success-foreground);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+:root {
+    --radius: 0.375rem;
+
+    /* cool clinical-chart paper — never warm/cream */
+    --background: #F1F4F6;
+    --foreground: #16212B;
+    --card: #FFFFFF;
+    --card-foreground: #16212B;
+    --popover: #FFFFFF;
+    --popover-foreground: #16212B;
+
+    /* institutional chart-blue — actions, links, focus (never a status color) */
+    --primary: #1D4E7A;
+    --primary-foreground: #F1F4F6;
+
+    --secondary: #E4E9ED;
+    --secondary-foreground: #16212B;
+    --muted: #E4E9ED;
+    --muted-foreground: #566270;
+    --accent: #E4E9ED;
+    --accent-foreground: #1D4E7A;
+
+    /* reading-alert — REFUSE / HALT / Insufficient, same red as a high BP reading */
+    --destructive: #B3402A;
+    --destructive-foreground: #F1F4F6;
+
+    /* reading-caution — CAUTION / DOWNGRADE / Medium-Low, same amber as an elevated reading */
+    --warning: #B8791A;
+    --warning-foreground: #F1F4F6;
+
+    /* reading-safe — ALLOW / PROCEED / High, same green as a normal BP reading */
+    --success: #2E7D4F;
+    --success-foreground: #F1F4F6;
+
+    --border: #D3DBE0;
+    --input: #D3DBE0;
+    --ring: #1D4E7A;
+
+    --chart-1: #1D4E7A;
+    --chart-2: #B8791A;
+    --chart-3: #B3402A;
+    --chart-4: #2E7D4F;
+    --chart-5: #6B5C9E;
+
+    --sidebar: #E9EDF0;
+    --sidebar-foreground: #16212B;
+    --sidebar-primary: #1D4E7A;
+    --sidebar-primary-foreground: #F1F4F6;
+    --sidebar-accent: #DCE3E8;
+    --sidebar-accent-foreground: #1D4E7A;
+    --sidebar-border: #D3DBE0;
+    --sidebar-ring: #1D4E7A;
+}
+
+.dark {
+    /* near-black chart-blue "night chart" */
+    --background: #0C1218;
+    --foreground: #E7ECF0;
+    --card: #131B23;
+    --card-foreground: #E7ECF0;
+    --popover: #131B23;
+    --popover-foreground: #E7ECF0;
+
+    --primary: #5B9BD5;
+    --primary-foreground: #0C1218;
+
+    --secondary: #1B252E;
+    --secondary-foreground: #E7ECF0;
+    --muted: #1B252E;
+    --muted-foreground: #93A2AF;
+    --accent: #1B252E;
+    --accent-foreground: #5B9BD5;
+
+    --destructive: #D06B52;
+    --destructive-foreground: #0C1218;
+
+    --warning: #D6A03F;
+    --warning-foreground: #0C1218;
+
+    --success: #4FA873;
+    --success-foreground: #0C1218;
+
+    --border: rgba(255, 255, 255, 0.1);
+    --input: rgba(255, 255, 255, 0.14);
+    --ring: #5B9BD5;
+
+    --chart-1: #5B9BD5;
+    --chart-2: #D6A03F;
+    --chart-3: #D06B52;
+    --chart-4: #4FA873;
+    --chart-5: #9C8BC9;
+
+    --sidebar: #0F1720;
+    --sidebar-foreground: #E7ECF0;
+    --sidebar-primary: #5B9BD5;
+    --sidebar-primary-foreground: #0C1218;
+    --sidebar-accent: #1B252E;
+    --sidebar-accent-foreground: #5B9BD5;
+    --sidebar-border: rgba(255, 255, 255, 0.1);
+    --sidebar-ring: #5B9BD5;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+  h1, h2, h3, h4 {
+    @apply font-heading;
+  }
+  .font-data {
+    font-family: var(--font-mono);
+    font-feature-settings: "tnum" 1;
+  }
+}
