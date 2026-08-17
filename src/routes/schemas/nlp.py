@@ -9,3 +9,9 @@ class SearchRequest(BaseModel):
     query: str
     mode: RetrievalMode = "hybrid_rerank"
     k: Optional[int] = None
+
+
+class AnswerRequest(BaseModel):
+    query: str
+    mode: RetrievalMode = "hybrid_rerank"
+    k: Optional[int] = None
