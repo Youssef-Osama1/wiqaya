@@ -1,0 +1,61 @@
+- generic [ref=f1e2]:
+  - generic [ref=f1e3]:
+    - complementary [ref=f1e4]:
+      - generic [ref=f1e5]:
+        - generic [ref=f1e6]: وقاية
+        - generic [ref=f1e7]: Wiqaya
+      - navigation [ref=f1e9]:
+        - link "Ask" [ref=f1e10] [cursor=pointer]:
+          - /url: /
+        - link "Search" [ref=f1e13] [cursor=pointer]:
+          - /url: /search
+        - link "Dashboard" [ref=f1e22] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Ingest" [ref=f1e28] [cursor=pointer]:
+          - /url: /ingest
+        - link "About" [ref=f1e32] [cursor=pointer]:
+          - /url: /about
+    - generic [ref=f1e35]:
+      - banner [ref=f1e36]:
+        - heading "Wiqaya" [level=1] [ref=f1e77]
+        - generic [ref=f1e38]:
+          - generic "API reachable" [ref=f1e49]: API online
+          - button "Switch to dark mode" [ref=f1e42]
+      - main [ref=f1e43]:
+        - generic [ref=f1e50]:
+          - generic [ref=f1e51]:
+            - textbox "Ask a question about hypertension diagnosis or treatment…" [ref=f1e52]: What is the target blood pressure for adults with hypertension?
+            - generic [ref=f1e53]:
+              - generic [ref=f1e54]:
+                - generic [ref=f1e55]:
+                  - generic [ref=f1e56]: Retrieval mode
+                  - combobox "Retrieval mode" [ref=f1e57]:
+                    - generic: Hybrid + Rerank (default)
+                  - combobox [ref=f1e58]
+                - generic [ref=f1e59]:
+                  - generic [ref=f1e60]: "Top-k: 5"
+                  - slider [ref=f1e65]
+              - button "Ask" [ref=f1e72]
+          - alert [ref=f1e78]:
+            - generic [ref=f1e82]:
+              - text: Allowed
+              - generic [ref=f1e83]: via classifier
+            - generic [ref=f1e84]: The question is about hypertension management and falls within the scope of WHO and NICE guidelines.
+          - navigation "Answer sections" [ref=f1e85]:
+            - link "Recommendation" [ref=f1e86] [cursor=pointer]:
+              - /url: /recommendation
+            - link "Evidence" [ref=f1e90] [cursor=pointer]:
+              - /url: /evidence
+            - link "Citations" [ref=f1e94] [cursor=pointer]:
+              - /url: /citations
+            - link "Confidence" [ref=f1e98] [cursor=pointer]:
+              - /url: /confidence
+            - link "Retrieved Chunks" [ref=f1e102] [cursor=pointer]:
+              - /url: /chunks
+            - link "Trace" [ref=f1e107] [cursor=pointer]:
+              - /url: /trace
+          - generic [ref=f1e112]:
+            - generic [ref=f1e113]: Recommendation
+            - paragraph [ref=f1e120]: The target blood pressure for adults with hypertension varies based on age, comorbidities, and the method of measurement. For adults under 80, the clinic blood pressure target is below 140/90 mmHg, while for those aged 80 and over, it is below 150/90 mmHg. When using home or ambulatory blood pressure monitoring (HBPM/ABPM), the targets are below 135/85 mmHg for adults under 80 and below 145/85 mmHg for those aged 80 and over. For patients with hypertension and known cardiovascular disease, the target systolic blood pressure is <130 mmHg, and for high-risk patients (those with high CVD risk, diabetes mellitus, or chronic kidney disease), a target systolic blood pressure of <130 mmHg is suggested.
+      - contentinfo [ref=f1e48]: Not a medical device. General guideline information only — always consult a qualified healthcare provider for decisions about individual patient care.
+  - region "Notifications alt+T"

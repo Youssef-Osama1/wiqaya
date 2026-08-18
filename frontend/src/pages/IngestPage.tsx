@@ -9,7 +9,7 @@ export default function IngestPage() {
 
   return (
     <div className="mx-auto max-w-2xl space-y-6 p-4 md:p-6">
-      <p className="text-sm text-muted-foreground">
+      <p className="rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground">
         Clean → chunk → embed → index the WHO and NICE guidelines into the active vector store. Run this once before
         using Ask, Search, or Dashboard.
       </p>

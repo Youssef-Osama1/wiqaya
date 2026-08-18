@@ -1,0 +1,76 @@
+- generic [ref=f2e2]:
+  - generic [ref=f2e3]:
+    - complementary [ref=f2e4]:
+      - generic [ref=f2e5]:
+        - generic [ref=f2e6]: وقاية
+        - generic [ref=f2e7]: Wiqaya
+      - navigation [ref=f2e9]:
+        - link "Ask" [ref=f2e10] [cursor=pointer]:
+          - /url: /
+        - link "Search" [ref=f2e13] [cursor=pointer]:
+          - /url: /search
+        - link "Dashboard" [ref=f2e22] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Ingest" [ref=f2e28] [cursor=pointer]:
+          - /url: /ingest
+        - link "About" [ref=f2e32] [cursor=pointer]:
+          - /url: /about
+    - generic [ref=f2e35]:
+      - banner [ref=f2e36]:
+        - heading "Wiqaya" [level=1] [ref=f2e73]
+        - generic [ref=f2e38]:
+          - generic "API unreachable" [ref=f2e49]: API offline
+          - button "Switch to dark mode" [ref=f2e42]
+      - main [ref=f2e43]:
+        - generic [ref=f2e50]:
+          - generic [ref=f2e51]:
+            - textbox "Ask a question about hypertension diagnosis or treatment…" [ref=f2e52]: What is the clinic blood pressure target for people aged 80 and over with hypertension?
+            - generic [ref=f2e53]:
+              - generic [ref=f2e54]:
+                - generic [ref=f2e55]:
+                  - generic [ref=f2e56]: Retrieval mode
+                  - combobox "Retrieval mode" [ref=f2e57]:
+                    - generic: Hybrid + Rerank (default)
+                  - combobox [ref=f2e58]
+                - generic [ref=f2e59]:
+                  - generic [ref=f2e60]: "Top-k: 5"
+                  - slider [ref=f2e65]
+              - button "Ask" [ref=f2e72]
+          - alert [ref=f2e74]:
+            - generic [ref=f2e78]: Allowed
+            - generic [ref=f2e79]: In-scope hypertension question.
+          - navigation "Answer sections" [ref=f2e80]:
+            - link "Recommendation" [ref=f2e81] [cursor=pointer]:
+              - /url: /recommendation
+            - link "Evidence" [ref=f2e85] [cursor=pointer]:
+              - /url: /evidence
+            - link "Citations" [active] [ref=f2e89] [cursor=pointer]:
+              - /url: /citations
+            - link "Confidence" [ref=f2e93] [cursor=pointer]:
+              - /url: /confidence
+            - link "Retrieved Chunks" [ref=f2e97] [cursor=pointer]:
+              - /url: /chunks
+            - link "Trace" [ref=f2e102] [cursor=pointer]:
+              - /url: /trace
+          - generic [ref=f2e118]:
+            - generic [ref=f2e119]: Citations
+            - table [ref=f2e126]:
+              - rowgroup [ref=f2e127]:
+                - row [ref=f2e128]:
+                  - columnheader "Document" [ref=f2e129]
+                  - columnheader "Section" [ref=f2e130]
+                  - columnheader "Page" [ref=f2e131]
+                  - columnheader "Chunk ID" [ref=f2e132]
+              - rowgroup [ref=f2e133]:
+                - row [ref=f2e134]:
+                  - cell "NICE NG136" [ref=f2e135]
+                  - cell "Monitoring treatment and blood pressure targets" [ref=f2e136]
+                  - cell "p.16" [ref=f2e137]
+                  - cell "nice_ng136-p016-beee1ff3" [ref=f2e138]
+                - row [ref=f2e139]:
+                  - cell "NICE NG136" [ref=f2e140]
+                  - cell "Monitoring treatment and blood pressure targets" [ref=f2e141]
+                  - cell "p.15" [ref=f2e142]
+                  - cell "nice_ng136-p015-aaee1ff2" [ref=f2e143]
+      - contentinfo [ref=f2e48]: Not a medical device. General guideline information only — always consult a qualified healthcare provider for decisions about individual patient care.
+  - region "Notifications alt+T"

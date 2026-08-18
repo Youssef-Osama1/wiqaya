@@ -1,0 +1,26 @@
+- generic [ref=f2e2]:
+  - generic [ref=f2e3]:
+    - complementary [ref=f2e4]:
+      - generic [ref=f2e5]:
+        - generic [ref=f2e6]: وقاية
+        - generic [ref=f2e7]: Wiqaya
+      - navigation [ref=f2e9]:
+        - link "Ask" [ref=f2e10] [cursor=pointer]:
+          - /url: /
+        - link "Search" [ref=f2e13] [cursor=pointer]:
+          - /url: /search
+        - link "Dashboard" [ref=f2e22] [cursor=pointer]:
+          - /url: /dashboard
+        - link "Ingest" [ref=f2e28] [cursor=pointer]:
+          - /url: /ingest
+        - link "About" [ref=f2e32] [cursor=pointer]:
+          - /url: /about
+    - generic [ref=f2e35]:
+      - banner [ref=f2e36]:
+        - heading "Ask" [level=1] [ref=f2e37]
+        - generic [ref=f2e38]:
+          - generic "Checking API..." [ref=f2e39]: Checking...
+          - button "Switch to dark mode" [ref=f2e42]
+      - main [ref=f2e43]
+      - contentinfo [ref=f2e48]: Not a medical device. General guideline information only — always consult a qualified healthcare provider for decisions about individual patient care.
+  - region "Notifications alt+T"

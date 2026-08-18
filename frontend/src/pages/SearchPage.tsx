@@ -15,7 +15,7 @@ export default function SearchPage() {
 
   return (
     <div className="mx-auto max-w-3xl space-y-6 p-4 md:p-6">
-      <p className="text-sm text-muted-foreground">
+      <p className="rounded-lg border border-border bg-card p-4 text-sm text-muted-foreground">
         Retrieval only — no generation, no guardrails. Compare how the 4 retrieval modes rank evidence for the same
         question.
       </p>

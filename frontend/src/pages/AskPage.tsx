@@ -1,72 +1,53 @@
 import { useEffect, useRef, useState } from "react";
 import { NavLink, Route, Routes, useNavigate, useSearchParams } from "react-router-dom";
-import { ShieldX } from "lucide-react";
+import { BookMarked, FileText, GitBranch, Layers, Quote, ShieldCheck } from "lucide-react";
 import QueryForm from "@/components/ask/QueryForm";
 import GateBanner from "@/components/ask/GateBanner";
 import EvidencePanel from "@/components/ask/EvidencePanel";
-import AnswerPanel from "@/components/ask/AnswerPanel";
+import RecommendationCard from "@/components/ask/RecommendationCard";
+import SupportingEvidenceCard from "@/components/ask/SupportingEvidenceCard";
+import CitationsCard from "@/components/ask/CitationsCard";
+import ConfidenceSafetyCard from "@/components/ask/ConfidenceSafetyCard";
 import TraceDetails from "@/components/ask/TraceDetails";
 import ErrorBanner from "@/components/common/ErrorBanner";
 import EmptyState from "@/components/common/EmptyState";
-import ThresholdGauge from "@/components/ask/ThresholdGauge";
 import NotFoundPage from "@/pages/NotFoundPage";
 import { Skeleton } from "@/components/ui/skeleton";
 import { cn } from "@/lib/utils";
 import { useAnswerMutation } from "@/hooks/useAnswerMutation";
-import type { AnswerTrace, RetrievalMode } from "@/types/api";
+import type { RetrievalMode } from "@/types/api";
 
-function AskTabNav({ trace }: { trace: AnswerTrace }) {
-  const showResultTabs = trace.gate.verdict !== "REFUSE";
+const RESULT_TABS = [
+  { to: "/recommendation", label: "Recommendation", icon: FileText },
+  { to: "/evidence", label: "Evidence", icon: Quote },
+  { to: "/citations", label: "Citations", icon: BookMarked },
+  { to: "/confidence", label: "Confidence", icon: ShieldCheck },
+  { to: "/chunks", label: "Retrieved Chunks", icon: Layers },
+] as const;
+
+function AskResultTabs({ showResultTabs }: { showResultTabs: boolean }) {
   const tabClass = ({ isActive }: { isActive: boolean }) =>
     cn(
-      "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+      "flex shrink-0 items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
       isActive ? "bg-muted text-foreground" : "text-muted-foreground hover:bg-muted/50 hover:text-foreground",
     );
 
   return (
-    <nav className="flex gap-1 border-b border-border pb-2" aria-label="Answer sections">
-      {showResultTabs ? (
-        <>
-          <NavLink to="/evidence" className={tabClass}>
-            Evidence
-          </NavLink>
-          <NavLink to="/answer" className={tabClass}>
-            Answer
-          </NavLink>
-        </>
-      ) : null}
+    <nav className="flex gap-1 overflow-x-auto border-b border-border pb-2" aria-label="Answer sections">
+      {showResultTabs
+        ? RESULT_TABS.map(({ to, label, icon: Icon }) => (
+            <NavLink key={to} to={to} className={tabClass}>
+              <Icon className="size-3.5" aria-hidden="true" />
+              {label}
+            </NavLink>
+          ))
+        : null}
       <NavLink to="/trace" className={tabClass}>
+        <GitBranch className="size-3.5" aria-hidden="true" />
         Trace
       </NavLink>
     </nav>
   );
-}
-
-function AskEvidenceTab({ trace }: { trace: AnswerTrace }) {
-  if (trace.gate.verdict === "REFUSE" || !trace.retrieval) return null;
-  return <EvidencePanel retrieval={trace.retrieval} />;
-}
-
-function AskAnswerTab({ trace }: { trace: AnswerTrace }) {
-  if (trace.gate.verdict === "REFUSE") return null;
-
-  if (trace.threshold?.action === "HALT") {
-    return (
-      <div className="space-y-6">
-        {trace.retrieval?.mode === "hybrid_rerank" ? (
-          <ThresholdGauge topScore={trace.threshold.top_score} action={trace.threshold.action} />
-        ) : null}
-        {trace.retrieval ? <EvidencePanel retrieval={trace.retrieval} /> : null}
-        <EmptyState
-          icon={ShieldX}
-          title="Insufficient evidence — the generator was never called"
-          description={`Top retrieval score ${trace.threshold.top_score.toFixed(3)} fell below the confidence threshold. The system refused to guess rather than answer without grounding.`}
-        />
-      </div>
-    );
-  }
-
-  return <AnswerPanel final={trace.final} audit={trace.audit} />;
 }
 
 export default function AskPage() {
@@ -95,7 +76,7 @@ export default function AskPage() {
 
   useEffect(() => {
     if (!trace) return;
-    navigate(trace.gate.verdict === "REFUSE" ? "/trace" : "/answer");
+    navigate(trace.gate.verdict === "REFUSE" ? "/trace" : "/recommendation");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [trace]);
 
@@ -123,7 +104,7 @@ export default function AskPage() {
       {answer.isError ? <ErrorBanner error={answer.error} /> : null}
 
       {showResults && trace ? <GateBanner gate={trace.gate} /> : null}
-      {showResults && trace ? <AskTabNav trace={trace} /> : null}
+      {showResults && trace ? <AskResultTabs showResultTabs={trace.gate.verdict !== "REFUSE"} /> : null}
 
       <Routes>
         <Route
@@ -137,8 +118,21 @@ export default function AskPage() {
             ) : null
           }
         />
-        <Route path="evidence" element={showResults && trace ? <AskEvidenceTab trace={trace} /> : null} />
-        <Route path="answer" element={showResults && trace ? <AskAnswerTab trace={trace} /> : null} />
+        {showResults && trace && trace.gate.verdict !== "REFUSE" ? (
+          <>
+            <Route
+              path="recommendation"
+              element={<RecommendationCard recommendation={trace.final.recommendation} threshold={trace.threshold} />}
+            />
+            <Route path="evidence" element={<SupportingEvidenceCard evidence={trace.final.evidence} />} />
+            <Route path="citations" element={<CitationsCard citations={trace.final.citations} />} />
+            <Route
+              path="confidence"
+              element={<ConfidenceSafetyCard confidence={trace.final.confidence} disclaimer={trace.final.disclaimer} audit={trace.audit} />}
+            />
+            <Route path="chunks" element={trace.retrieval ? <EvidencePanel retrieval={trace.retrieval} /> : null} />
+          </>
+        ) : null}
         <Route path="trace" element={showResults && trace ? <TraceDetails trace={trace} /> : null} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>

@@ -16,7 +16,8 @@ async function askQuestion(text: string) {
 }
 
 describe("AskPage", () => {
-  it("renders a High-confidence answer with citations for an ALLOW response", async () => {
+  it("renders a High-confidence answer across the Recommendation/Evidence/Citations/Confidence tabs for an ALLOW response", async () => {
+    const user = userEvent.setup();
     renderWithProviders(<AskPage />);
 
     await askQuestion(ALLOW_HIGH_TRACE.query);
@@ -25,11 +26,21 @@ describe("AskPage", () => {
     await waitFor(() =>
       expect(screen.getAllByText(/reduce clinic blood pressure to below 150\/90 mmhg/i).length).toBeGreaterThan(0),
     );
-    expect(screen.getAllByText("nice_ng136-p016-beee1ff3").length).toBeGreaterThan(0);
+
+    await user.click(screen.getByRole("link", { name: /^evidence$/i }));
+    expect(screen.getByText(/nice_ng136-p016-beee1ff3/)).toBeInTheDocument();
+
+    await user.click(screen.getByRole("link", { name: /^citations$/i }));
+    expect(screen.getByText("NICE NG136")).toBeInTheDocument();
+
+    await user.click(screen.getByRole("link", { name: /^confidence$/i }));
     expect(screen.getByText(/^high$/i)).toBeInTheDocument();
+
+    await user.click(screen.getByRole("link", { name: /retrieved chunks/i }));
+    expect(screen.getByText(/evidence panel/i)).toBeInTheDocument();
   });
 
-  it("shows only the refusal reason and hides the evidence panel on REFUSE", async () => {
+  it("shows only the refusal reason and hides the result tabs on REFUSE", async () => {
     server.use(http.post(`${API_BASE}/nlp/answer`, () => HttpResponse.json(REFUSE_TRACE)));
     renderWithProviders(<AskPage />);
 
@@ -37,18 +48,24 @@ describe("AskPage", () => {
 
     await waitFor(() => expect(screen.getByText(/refused/i)).toBeInTheDocument());
     expect(screen.getByText(REFUSE_TRACE.gate.reason)).toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /^recommendation$/i })).not.toBeInTheDocument();
     expect(screen.queryByText(/evidence panel/i)).not.toBeInTheDocument();
   });
 
-  it("shows the HALT callout and evidence panel, but no recommendation, when the threshold halts", async () => {
+  it("shows the halt callout on the Recommendation tab and the low-scoring chunk under Retrieved Chunks, when the threshold halts", async () => {
+    const user = userEvent.setup();
     server.use(http.post(`${API_BASE}/nlp/answer`, () => HttpResponse.json(HALT_TRACE)));
     renderWithProviders(<AskPage />);
 
     await askQuestion(HALT_TRACE.query);
 
-    await waitFor(() => expect(screen.getByText(/insufficient evidence — the generator was never called/i)).toBeInTheDocument());
+    await waitFor(() =>
+      expect(screen.getByText(/the guidelines do not contain enough relevant information/i)).toBeInTheDocument(),
+    );
+    expect(screen.getByText(/0\.100 · HALT/)).toBeInTheDocument();
+
+    await user.click(screen.getByRole("link", { name: /retrieved chunks/i }));
     expect(screen.getByText(/evidence panel/i)).toBeInTheDocument();
-    expect(screen.queryByText(/^recommendation$/i)).not.toBeInTheDocument();
   });
 
   it("shows a clean error banner instead of crashing when the API is unreachable", async () => {

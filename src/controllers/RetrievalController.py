@@ -44,7 +44,7 @@ class RetrievalController:
     def _semantic(self, query: str, k: int) -> list[ScoredChunk]:
         pairs = self.vectorstore.similarity_search_with_score(query, k=k)
         return [ScoredChunk(chunk=_doc_to_chunk(doc), score=float(score), source="semantic") for doc, score in pairs]
-
+    
     def _bm25(self, query: str, k: int) -> list[ScoredChunk]:
         retriever = self.bm25_retriever
         preprocessed = retriever.preprocess_func(query)
