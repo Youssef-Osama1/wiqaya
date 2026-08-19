@@ -8,6 +8,8 @@ export interface E2EEvalParams {
 
 export const evaluationApi = {
   retrieval: () => apiClient.post<RetrievalEvalReport>("/evaluation/retrieval"),
+  latestRetrieval: () => apiClient.get<RetrievalEvalReport>("/evaluation/retrieval/latest"),
+  latestE2E: () => apiClient.get<E2EEvalReport>("/evaluation/e2e/latest"),
   e2e: (params: E2EEvalParams = {}) => {
     const search = new URLSearchParams();
     if (params.mode) search.set("mode", params.mode);

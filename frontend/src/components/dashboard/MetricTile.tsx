@@ -1,21 +1,24 @@
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+
+type MetricTone = "neutral" | "good" | "warn";
 
 interface MetricTileProps {
   label: string;
   value: string;
-  emphasis?: boolean;
+  tone?: MetricTone;
 }
 
-export default function MetricTile({ label, value, emphasis }: MetricTileProps) {
+const TONE_CLASSES: Record<MetricTone, string> = {
+  neutral: "",
+  good: "text-success",
+  warn: "text-warning",
+};
+
+export default function MetricTile({ label, value, tone = "neutral" }: MetricTileProps) {
   return (
-    <Card className="gap-2 py-4">
-      <CardHeader className="px-4">
-        <p className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{label}</p>
-      </CardHeader>
-      <CardContent className="px-4">
-        <p className={cn("font-data text-2xl font-semibold", emphasis && "text-primary")}>{value}</p>
-      </CardContent>
-    </Card>
+    <div className="panel rounded-2xl p-5">
+      <div className="tiny text-muted-foreground">{label}</div>
+      <div className={cn("metric mt-2", TONE_CLASSES[tone])}>{value}</div>
+    </div>
   );
 }

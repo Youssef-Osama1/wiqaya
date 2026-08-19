@@ -170,5 +170,11 @@ export const handlers = [
   http.post(`${API_BASE}/nlp/search`, () => HttpResponse.json(SEARCH_RESULT)),
   http.post(`${API_BASE}/data/ingest`, () => HttpResponse.json(INGEST_RESPONSE)),
   http.post(`${API_BASE}/evaluation/retrieval`, () => HttpResponse.json(RETRIEVAL_EVAL_REPORT)),
+  http.get(`${API_BASE}/evaluation/retrieval/latest`, () =>
+    HttpResponse.json({ detail: "No saved retrieval evaluation yet — run one first." }, { status: 404 }),
+  ),
+  http.get(`${API_BASE}/evaluation/e2e/latest`, () =>
+    HttpResponse.json({ detail: "No saved e2e evaluation yet — run one first." }, { status: 404 }),
+  ),
   http.post(`${API_BASE}/evaluation/e2e`, () => HttpResponse.json(E2E_EVAL_REPORT)),
 ];

@@ -31,6 +31,30 @@ LIVE_RETRIEVAL_EVAL_DELAY = 6.5
 LIVE_E2E_EVAL_DELAY = 15.0
 
 
+def _latest_report(prefix: str) -> dict:
+    if not RUNS_DIR.exists():
+        raise HTTPException(status_code=404, detail=f"No saved {prefix} evaluation yet - run one first.")
+    candidates = sorted(RUNS_DIR.glob(f"{prefix}_*.json"))
+    if not candidates:
+        raise HTTPException(status_code=404, detail=f"No saved {prefix} evaluation yet - run one first.")
+    newest = candidates[-1]
+    try:
+        report = json.loads(newest.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as e:
+        raise HTTPException(status_code=500, detail=f"Saved {prefix} report could not be read: {e}")
+    return {"report_path": str(newest), **report}
+
+
+@router.get("/retrieval/latest")
+def latest_retrieval() -> dict:
+    return _latest_report("retrieval")
+
+
+@router.get("/e2e/latest")
+def latest_e2e() -> dict:
+    return _latest_report("e2e")
+
+
 @router.post("/retrieval")
 def evaluate_retrieval(req: Request) -> dict:
     settings = get_settings()
@@ -39,7 +63,7 @@ def evaluate_retrieval(req: Request) -> dict:
     except Exception as e:
         raise HTTPException(
             status_code=503,
-            detail=f"Vector store not ready — run POST /api/v1/data/ingest first: {e}",
+            detail=f"Vector store not ready - run POST /api/v1/data/ingest first: {e}",
         )
     retrieval_controller = RetrievalController(settings, vectorstore, req.app.state.bm25_retriever)
     searcher = RateLimitedSearcher(retrieval_controller, delay=LIVE_RETRIEVAL_EVAL_DELAY)
@@ -65,7 +89,7 @@ def evaluate_e2e(req: Request, mode: str = DEFAULT_E2E_MODE, k: int = DEFAULT_E2
     except Exception as e:
         raise HTTPException(
             status_code=503,
-            detail=f"Vector store not ready — run POST /api/v1/data/ingest first: {e}",
+            detail=f"Vector store not ready - run POST /api/v1/data/ingest first: {e}",
         )
 
     llm = req.app.state.llm
