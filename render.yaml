@@ -1,0 +1,100 @@
+services:
+  - type: web
+    name: wiqaya-api
+    runtime: python
+    plan: free
+    region: frankfurt
+    rootDir: .
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn src.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.15"
+
+      - key: APP_NAME
+        value: wiqaya
+      - key: APP_VERSION
+        value: "0.1.0"
+      - key: ENV
+        value: prod
+      # must list the deployed static site's origin, or the browser blocks every call
+      - key: CORS_ORIGINS
+        sync: false
+
+      - key: GENERATION_BACKEND
+        value: cohere
+      - key: EMBEDDING_BACKEND
+        value: cohere
+      - key: RERANKER_BACKEND
+        value: cohere
+      - key: COHERE_API_KEY
+        sync: false
+      - key: GENERATION_MODEL_ID
+        value: command-a-03-2025
+      - key: GENERATION_TEMPERATURE
+        value: "0.0"
+      - key: EMBEDDING_MODEL_ID
+        value: embed-english-v3.0
+      - key: RERANKER_MODEL_ID
+        value: rerank-v3.5
+
+      - key: VECTOR_DB_BACKEND
+        value: qdrant
+      - key: VECTOR_COLLECTION_NAME
+        value: wiqaya_chunks
+      - key: QDRANT_URL
+        sync: false
+      - key: QDRANT_API_KEY
+        sync: false
+
+      # unused when VECTOR_DB_BACKEND is qdrant, but Settings requires them
+      - key: POSTGRES_USER
+        value: unused
+      - key: POSTGRES_PASSWORD
+        value: unused
+      - key: POSTGRES_HOST
+        value: localhost
+      - key: POSTGRES_PORT
+        value: "5432"
+      - key: POSTGRES_DB
+        value: unused
+
+      - key: CHUNK_TARGET_TOKENS
+        value: "600"
+      - key: CHUNK_MAX_TOKENS
+        value: "800"
+      - key: CHUNK_MIN_TOKENS
+        value: "120"
+      - key: CHUNK_OVERLAP_TOKENS
+        value: "80"
+
+      - key: DEFAULT_TOP_K
+        value: "5"
+      - key: RERANK_CANDIDATE_K
+        value: "20"
+      - key: HYBRID_WEIGHT_SEMANTIC
+        value: "0.5"
+
+      - key: SIM_HALT_THRESHOLD
+        value: "0.45"
+      - key: SIM_DOWNGRADE_THRESHOLD
+        value: "0.65"
+
+  - type: web
+    name: wiqaya-web
+    runtime: static
+    plan: free
+    rootDir: frontend
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      # baked in at build time, so a change here needs a redeploy of this service
+      - key: VITE_API_BASE_URL
+        sync: false
+    routes:
+      # client-side router owns /recommendation, /evidence, /dashboard ... so every
+      # path has to fall through to index.html instead of 404ing on a direct load
+      - type: rewrite
+        source: /*
+        destination: /index.html

@@ -1,0 +1,51 @@
+{
+  "timestamp": "2026-08-19T09:10:41.671856+00:00",
+  "golden_set_size": 25,
+  "mode": "hybrid_rerank",
+  "k": 5,
+  "precision_at_k": 0.2222222222222222,
+  "recall_at_k": 0.8888888888888888,
+  "mrr": 0.7685185185185186,
+  "n_questions_scored": 18,
+  "citation_accuracy": 0.9767441860465116,
+  "unsupported_claim_rate": 0.0,
+  "refusal_correctness": 1.0,
+  "category_breakdown": {
+    "direct": {
+      "count": 10,
+      "correct": 10
+    },
+    "multi_chunk": {
+      "count": 4,
+      "correct": 4
+    },
+    "ambiguous": {
+      "count": 5,
+      "correct": 4
+    },
+    "out_of_scope": {
+      "count": 6,
+      "correct": 6
+    }
+  },
+  "failures": [
+    {
+      "qid": "A1",
+      "question": "What blood pressure medication should I take?",
+      "category": "ambiguous",
+      "expected_behavior": "answer",
+      "actual_gate_verdict": "CAUTION",
+      "actual_confidence": "Insufficient Evidence",
+      "relevant_chunk_ids": [
+        "nice_ng136-p010-2844f09f"
+      ],
+      "retrieved_chunk_ids": [
+        "who_hypertension-p009-09d6bdc9",
+        "who_hypertension-p013-e095debe",
+        "who_hypertension-p040-81e22479",
+        "who_hypertension-p040-7c6e65aa",
+        "who_hypertension-p038-fb3c051a"
+      ]
+    }
+  ]
+}
