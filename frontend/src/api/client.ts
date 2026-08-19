@@ -20,7 +20,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
       headers: { "Content-Type": "application/json", ...init?.headers },
     });
   } catch {
-    throw new ApiError(0, "Could not reach the Wiqaya API — is the backend running?");
+    throw new ApiError(0, "Could not reach the Wiqaya API - is the backend running?");
   }
 
   if (!res.ok) {

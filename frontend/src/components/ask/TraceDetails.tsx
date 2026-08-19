@@ -12,7 +12,7 @@ export default function TraceDetails({ trace }: { trace: AnswerTrace }) {
     <Accordion type="single" collapsible>
       <AccordionItem value="trace" className="rounded-md border border-border px-4">
         <AccordionTrigger className="font-mono text-xs text-muted-foreground hover:no-underline">
-          Full trace — timings, threshold, raw model output
+          Full trace - timings, threshold, raw model output
         </AccordionTrigger>
         <AccordionContent className="space-y-4 text-sm">
           {timingEntries.length > 0 ? (
@@ -35,7 +35,7 @@ export default function TraceDetails({ trace }: { trace: AnswerTrace }) {
                 <ThresholdGauge topScore={trace.threshold.top_score} action={trace.threshold.action} />
               ) : (
                 <p className="font-mono text-xs">
-                  <span className={thresholdVisuals[trace.threshold.action].textClass}>{trace.threshold.action}</span> — top score{" "}
+                  <span className={thresholdVisuals[trace.threshold.action].textClass}>{trace.threshold.action}</span> - top score{" "}
                   {trace.threshold.top_score.toFixed(3)}
                 </p>
               )}

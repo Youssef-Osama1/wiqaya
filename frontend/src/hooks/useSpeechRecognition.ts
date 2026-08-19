@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const ERROR_MESSAGES: Partial<Record<SpeechRecognitionErrorCode, string>> = {
-  "not-allowed": "Microphone permission denied — allow microphone access and try again.",
-  "service-not-allowed": "Microphone permission denied — allow microphone access and try again.",
+  "not-allowed": "Microphone permission denied - allow microphone access and try again.",
+  "service-not-allowed": "Microphone permission denied - allow microphone access and try again.",
   "audio-capture": "No microphone found.",
-  "no-speech": "Didn't catch that — try again.",
-  network: "Speech recognition is unavailable — check your connection.",
+  "no-speech": "Didn't catch that - try again.",
+  network: "Speech recognition is unavailable - check your connection.",
 };
 
 function getConstructor() {
@@ -46,7 +46,7 @@ export function useSpeechRecognition(onResult: (transcript: string) => void) {
 
     recognition.onerror = (event) => {
       if (event.error === "aborted") return;
-      setError(ERROR_MESSAGES[event.error] ?? "Voice input failed — try again.");
+      setError(ERROR_MESSAGES[event.error] ?? "Voice input failed - try again.");
     };
 
     recognition.onend = () => {

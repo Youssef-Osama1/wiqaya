@@ -17,12 +17,12 @@ from src.helpers.config import Settings
 DISCLAIMER = (
     "This information is derived from WHO and NICE hypertension guidelines and is intended "
     "for general clinical decision support only. It is not a substitute for professional "
-    "medical judgment — always consult a qualified healthcare provider for decisions about "
+    "medical judgment - always consult a qualified healthcare provider for decisions about "
     "individual patient care."
 )
 
 CAUTION_DISCLAIMER = (
-    DISCLAIMER + " This question appears to ask for personal medical advice — please consult "
+    DISCLAIMER + " This question appears to ask for personal medical advice - please consult "
     "a healthcare provider directly rather than relying on this general guideline summary."
 )
 

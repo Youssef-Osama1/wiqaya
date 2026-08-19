@@ -28,7 +28,7 @@ def apply_gate_rules(query: str) -> Optional[GateDecision]:
     if EMERGENCY_SYMPTOMS.search(query):
         return GateDecision(
             verdict="REFUSE",
-            reason="This question describes a potential medical emergency — call emergency services immediately.",
+            reason="This question describes a potential medical emergency - call emergency services immediately.",
             triggered_by="emergency_symptoms",
         )
 
@@ -42,7 +42,7 @@ def apply_gate_rules(query: str) -> Optional[GateDecision]:
     if HYPERTENSION_CONTEXT.search(query) and PERSONAL_DOSING_PHRASE.search(query):
         return GateDecision(
             verdict="CAUTION",
-            reason="This looks like a personal medication question — general guideline information only, not a prescription.",
+            reason="This looks like a personal medication question - general guideline information only, not a prescription.",
             triggered_by="personal_dosing",
         )
 

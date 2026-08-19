@@ -21,7 +21,7 @@ def search(request: SearchRequest, req: Request) -> RetrievalResult:
     except Exception as e:
         raise HTTPException(
             status_code=503,
-            detail=f"Vector store not ready — run POST /api/v1/data/ingest first: {e}",
+            detail=f"Vector store not ready - run POST /api/v1/data/ingest first: {e}",
         )
 
     controller = RetrievalController(settings, vectorstore, req.app.state.bm25_retriever)
@@ -47,7 +47,7 @@ def answer(request: AnswerRequest, req: Request) -> AnswerTrace:
         except Exception as e:
             raise HTTPException(
                 status_code=503,
-                detail=f"Vector store not ready — run POST /api/v1/data/ingest first: {e}",
+                detail=f"Vector store not ready - run POST /api/v1/data/ingest first: {e}",
             )
         retrieval_controller = RetrievalController(settings, vectorstore, req.app.state.bm25_retriever)
 

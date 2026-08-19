@@ -23,7 +23,7 @@ export default function MicButton({ onTranscript, disabled }: MicButtonProps) {
         size="icon"
         aria-label={label}
         aria-pressed={isListening}
-        title={isListening ? "Listening — click to stop" : "Ask by voice (English)"}
+        title={isListening ? "Listening - click to stop" : "Ask by voice (English)"}
         disabled={disabled}
         onClick={isListening ? stop : start}
         className={cn(isListening && "border-destructive/40 bg-destructive/10 text-destructive")}

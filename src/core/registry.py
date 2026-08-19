@@ -24,7 +24,7 @@ REGISTRY: dict[str, DocSpec] = {
     "nice_ng136": DocSpec(
         doc_key="nice_ng136",
         path=DATA_RAW_DIR / "hypertension-in-adults-diagnosis-and-management.pdf",
-        document_name="NICE NG136: Hypertension in Adults — Diagnosis and Management",
+        document_name="NICE NG136: Hypertension in Adults - Diagnosis and Management",
         source_url="https://www.nice.org.uk/guidance/ng136",
         cleaning_profile="nice_ng136",
     ),
