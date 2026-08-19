@@ -18,7 +18,7 @@ import type { IngestRequest } from "@/api/data";
 
 const DOC_OPTIONS = [
   { key: "who_hypertension", label: "WHO Guideline for the Pharmacological Treatment of Hypertension in Adults" },
-  { key: "nice_ng136", label: "NICE NG136: Hypertension in Adults — Diagnosis and Management" },
+  { key: "nice_ng136", label: "NICE NG136: Hypertension in Adults - Diagnosis and Management" },
 ];
 
 interface IngestFormProps {
@@ -50,11 +50,11 @@ export default function IngestForm({ onSubmit, isPending }: IngestFormProps) {
   };
 
   return (
-    <div className="space-y-4 rounded-lg border border-border bg-card p-4">
+    <div className="panel space-y-5 rounded-2xl p-6">
       <div className="space-y-2">
-        <p className="text-sm font-medium">Guidelines to ingest</p>
+        <p className="tiny text-muted-foreground">Guidelines to ingest</p>
         {DOC_OPTIONS.map((doc) => (
-          <label key={doc.key} className="flex items-center gap-2 text-sm">
+          <label key={doc.key} className="flex items-center gap-3 rounded-xl border border-input p-4 text-sm">
             <Checkbox checked={selectedDocs.includes(doc.key)} onCheckedChange={() => toggleDoc(doc.key)} />
             {doc.label}
             <span className="font-mono text-xs text-muted-foreground">({doc.key})</span>
@@ -91,7 +91,7 @@ export default function IngestForm({ onSubmit, isPending }: IngestFormProps) {
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogTrigger asChild>
-          <Button disabled={isPending || selectedDocs.length === 0} className="gap-2">
+          <Button disabled={isPending || selectedDocs.length === 0} className="w-full rounded-xl py-3 font-bold">
             <UploadCloud className="size-4" />
             {isPending ? "Ingesting…" : "Ingest"}
           </Button>

@@ -1,8 +1,8 @@
 export default function DisclaimerFooter() {
   return (
-    <footer className="border-t border-border bg-card px-4 py-2.5 text-center text-xs text-muted-foreground md:px-6">
-      Not a medical device. General guideline information only — always consult a qualified healthcare provider
-      for decisions about individual patient care.
+    <footer className="mx-auto flex w-full max-w-[1440px] flex-wrap justify-between gap-4 border-t border-border px-6 py-5 text-[11px] text-muted-foreground">
+      <span className="tiny">Wiqaya is clinical decision support, not a substitute for clinical judgment.</span>
+      <span className="font-data">WHO + NICE // hypertension corpus</span>
     </footer>
   );
 }

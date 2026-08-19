@@ -3,29 +3,31 @@ import type { RetrievalMatrixRow } from "@/types/api";
 
 export default function ModeComparisonTable({ matrix }: { matrix: RetrievalMatrixRow[] }) {
   return (
-    <Table>
-      <TableHeader>
-        <TableRow>
-          <TableHead>Mode</TableHead>
-          <TableHead>k</TableHead>
-          <TableHead>Precision@k</TableHead>
-          <TableHead>Recall@k</TableHead>
-          <TableHead>MRR</TableHead>
-          <TableHead>n</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {matrix.map((row) => (
-          <TableRow key={`${row.mode}-${row.k}`}>
-            <TableCell className="font-mono">{row.mode}</TableCell>
-            <TableCell>{row.k}</TableCell>
-            <TableCell>{row.precision_at_k.toFixed(3)}</TableCell>
-            <TableCell>{row.recall_at_k.toFixed(3)}</TableCell>
-            <TableCell>{row.mrr.toFixed(3)}</TableCell>
-            <TableCell className="text-muted-foreground">{row.n_questions_scored}</TableCell>
+    <div className="panel overflow-hidden rounded-2xl">
+      <Table>
+        <TableHeader>
+          <TableRow className="bg-popover">
+            <TableHead className="tiny">Mode</TableHead>
+            <TableHead className="tiny">k</TableHead>
+            <TableHead className="tiny">Precision@k</TableHead>
+            <TableHead className="tiny">Recall@k</TableHead>
+            <TableHead className="tiny">MRR</TableHead>
+            <TableHead className="tiny">n</TableHead>
           </TableRow>
-        ))}
-      </TableBody>
-    </Table>
+        </TableHeader>
+        <TableBody>
+          {matrix.map((row) => (
+            <TableRow key={`${row.mode}-${row.k}`}>
+              <TableCell className="font-data text-primary">{row.mode}</TableCell>
+              <TableCell className="font-data">{row.k}</TableCell>
+              <TableCell className="font-data">{row.precision_at_k.toFixed(3)}</TableCell>
+              <TableCell className="font-data">{row.recall_at_k.toFixed(3)}</TableCell>
+              <TableCell className="font-data">{row.mrr.toFixed(3)}</TableCell>
+              <TableCell className="font-data text-muted-foreground">{row.n_questions_scored}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
   );
 }

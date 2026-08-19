@@ -1,18 +1,10 @@
-import { ShieldCheck } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { confidenceVisuals } from "@/lib/confidence";
 import type { ClaimAudit, Confidence } from "@/types/api";
 
-function AuditLine({ audit }: { audit: ClaimAudit | null }) {
-  if (!audit) return null;
+function auditSummary(audit: ClaimAudit | null) {
+  if (!audit || audit.quote_checks.length === 0) return null;
   const verified = audit.quote_checks.filter((q) => q.verified).length;
-  const total = audit.quote_checks.length;
-  if (total === 0) return null;
-  return (
-    <span className="font-mono text-[11px] uppercase tracking-wide opacity-70">
-      {verified}/{total} quotes verified · {(audit.unsupported_rate * 100).toFixed(0)}% unsupported
-    </span>
-  );
+  return { verified, total: audit.quote_checks.length, unsupported: audit.unsupported_rate };
 }
 
 export default function ConfidenceSafetyCard({
@@ -25,28 +17,31 @@ export default function ConfidenceSafetyCard({
   audit: ClaimAudit | null;
 }) {
   const visual = confidenceVisuals[confidence];
-  const Icon = visual.icon;
+  const summary = auditSummary(audit);
 
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle className="flex items-center gap-2">
-          <ShieldCheck className="size-4 text-primary" />
-          Confidence &amp; Safety
-        </CardTitle>
-      </CardHeader>
-      <CardContent>
-        <div className={`relative rounded-md border-2 border-double p-4 ${visual.badgeClass}`}>
-          <div className="flex items-center justify-between gap-3">
-            <div className="flex items-center gap-2">
-              <Icon className="size-5" />
-              <span className="font-heading text-lg font-semibold uppercase tracking-wide">{visual.label}</span>
+    <div className="grid gap-5 md:grid-cols-2">
+      <div className="panel rounded-2xl p-6">
+        <div className={`tiny ${visual.textClass}`}>Confidence</div>
+        <div className={`metric mt-3 uppercase ${visual.textClass}`}>{visual.label}</div>
+      </div>
+
+      <div className="panel rounded-2xl p-6">
+        <div className="tiny text-muted-foreground">Audit</div>
+        {summary ? (
+          <>
+            <div className="mt-3 text-2xl">
+              {summary.verified} / {summary.total} quotes verified
             </div>
-            <AuditLine audit={audit} />
-          </div>
-          <p className="mt-3 border-t border-current/20 pt-3 text-xs leading-relaxed opacity-80">{disclaimer}</p>
-        </div>
-      </CardContent>
-    </Card>
+            <div className={summary.unsupported === 0 ? "mt-2 text-success" : "mt-2 text-destructive"}>
+              {(summary.unsupported * 100).toFixed(0)}% unsupported claims
+            </div>
+          </>
+        ) : (
+          <div className="mt-3 text-2xl text-muted-foreground">No claims to audit</div>
+        )}
+        <p className="mt-7 text-xs leading-5 text-muted-foreground">{disclaimer}</p>
+      </div>
+    </div>
   );
 }

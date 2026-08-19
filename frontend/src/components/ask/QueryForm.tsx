@@ -1,6 +1,5 @@
-import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
 import ModeSelector from "@/components/ask/ModeSelector";
 import MicButton from "@/components/ask/MicButton";
 import type { RetrievalMode } from "@/types/api";
@@ -30,28 +29,37 @@ export default function QueryForm({
 }: QueryFormProps) {
   return (
     <form
-      className="space-y-4 rounded-lg border border-border bg-card p-4"
+      className="panel flex flex-wrap items-end gap-3 rounded-2xl p-4"
       onSubmit={(e) => {
         e.preventDefault();
         if (query.trim()) onSubmit();
       }}
     >
-      <Textarea
-        value={query}
-        onChange={(e) => onQueryChange(e.target.value)}
-        placeholder="Ask a question about hypertension diagnosis or treatment…"
-        rows={3}
-        className="resize-none"
-      />
-      <div className="flex flex-wrap items-end justify-between gap-4">
-        <ModeSelector mode={mode} onModeChange={onModeChange} k={k} onKChange={onKChange} />
-        <div className="flex items-center gap-2">
-          <MicButton onTranscript={onQueryChange} disabled={isPending} />
-          <Button type="submit" disabled={isPending || !query.trim()} className="gap-2">
-            <Search className="size-4" />
-            {isPending ? "Working…" : submitLabel}
-          </Button>
-        </div>
+      <div className="min-w-[280px] grow">
+        <label htmlFor="clinical-question" className="tiny mb-2 block text-muted-foreground">
+          Clinical question
+        </label>
+        <Input
+          id="clinical-question"
+          value={query}
+          onChange={(e) => onQueryChange(e.target.value)}
+          placeholder="Ask a question about hypertension diagnosis or treatment…"
+          className="h-auto rounded-xl px-4 py-3 text-base"
+        />
+      </div>
+
+      <ModeSelector mode={mode} onModeChange={onModeChange} k={k} onKChange={onKChange} />
+
+      <div className="flex items-center gap-2">
+        <MicButton onTranscript={onQueryChange} disabled={isPending} />
+        <Button
+          type="submit"
+          disabled={isPending || !query.trim()}
+          className="h-auto rounded-xl px-5 py-3 font-bold"
+        >
+          {isPending ? "Working…" : submitLabel}
+          {isPending ? null : <span aria-hidden="true">→</span>}
+        </Button>
       </div>
     </form>
   );

@@ -27,16 +27,16 @@ describe("AskPage", () => {
       expect(screen.getAllByText(/reduce clinic blood pressure to below 150\/90 mmhg/i).length).toBeGreaterThan(0),
     );
 
-    await user.click(screen.getByRole("link", { name: /^evidence$/i }));
+    await user.click(screen.getByRole("link", { name: /evidence quotes/i }));
     expect(screen.getByText(/nice_ng136-p016-beee1ff3/)).toBeInTheDocument();
 
-    await user.click(screen.getByRole("link", { name: /^citations$/i }));
+    await user.click(screen.getByRole("link", { name: /citations/i }));
     expect(screen.getByText("NICE NG136")).toBeInTheDocument();
 
-    await user.click(screen.getByRole("link", { name: /^confidence$/i }));
+    await user.click(screen.getByRole("link", { name: /confidence & audit/i }));
     expect(screen.getByText(/^high$/i)).toBeInTheDocument();
 
-    await user.click(screen.getByRole("link", { name: /retrieved chunks/i }));
+    await user.click(screen.getByRole("link", { name: /raw retrieval/i }));
     expect(screen.getByText(/evidence panel/i)).toBeInTheDocument();
   });
 
@@ -48,7 +48,7 @@ describe("AskPage", () => {
 
     await waitFor(() => expect(screen.getByText(/refused/i)).toBeInTheDocument());
     expect(screen.getByText(REFUSE_TRACE.gate.reason)).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: /^recommendation$/i })).not.toBeInTheDocument();
+    expect(screen.queryByRole("link", { name: /recommendation/i })).not.toBeInTheDocument();
     expect(screen.queryByText(/evidence panel/i)).not.toBeInTheDocument();
   });
 
@@ -64,7 +64,7 @@ describe("AskPage", () => {
     );
     expect(screen.getByText(/0\.100 · HALT/)).toBeInTheDocument();
 
-    await user.click(screen.getByRole("link", { name: /retrieved chunks/i }));
+    await user.click(screen.getByRole("link", { name: /raw retrieval/i }));
     expect(screen.getByText(/evidence panel/i)).toBeInTheDocument();
   });
 

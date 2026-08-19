@@ -13,9 +13,10 @@ export default function EvidencePanel({ retrieval }: { retrieval: RetrievalResul
   const defaultOpen = results.slice(0, 2).map((r) => r.chunk.metadata.chunk_id);
 
   return (
-    <div className="space-y-2">
-      <h2 className="font-heading text-sm font-semibold text-muted-foreground">
-        Evidence Panel — {results.length} chunk{results.length === 1 ? "" : "s"}, mode: <span className="font-mono">{mode}</span>
+    <div className="space-y-3">
+      <h2 className="tiny text-muted-foreground">
+        Evidence panel - {results.length} chunk{results.length === 1 ? "" : "s"} · mode{" "}
+        <span className="font-data normal-case text-primary">{mode}</span>
       </h2>
       <Accordion type="multiple" defaultValue={defaultOpen} className="space-y-2">
         {results.map((scored, i) => (
