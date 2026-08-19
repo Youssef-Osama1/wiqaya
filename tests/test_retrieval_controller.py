@@ -80,7 +80,7 @@ def controller(settings, tmp_path):
 
     from qdrant_client import QdrantClient
 
-    client = QdrantClient(url=settings.QDRANT_URL)
+    client = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY)
     if client.collection_exists(settings.VECTOR_COLLECTION_NAME):
         client.delete_collection(settings.VECTOR_COLLECTION_NAME)
 

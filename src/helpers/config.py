@@ -34,6 +34,7 @@ class Settings(BaseSettings):
     POSTGRES_DB: str
 
     QDRANT_URL: str
+    QDRANT_API_KEY: Optional[str] = None
 
     CHUNK_TARGET_TOKENS: int
     CHUNK_MAX_TOKENS: int

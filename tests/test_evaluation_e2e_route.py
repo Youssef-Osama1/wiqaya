@@ -89,7 +89,7 @@ def fake_backends_and_small_golden_set(monkeypatch, tmp_path):
     ) as conn:
         conn.execute("DELETE FROM langchain_pg_embedding WHERE id LIKE 'nice_ng136-%'")
         conn.commit()
-    client = QdrantClient(url=settings.QDRANT_URL)
+    client = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY)
     if client.collection_exists(test_collection_name):
         client.delete_collection(test_collection_name)
 

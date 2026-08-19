@@ -32,7 +32,7 @@ def get_vectordb(
 
         from langchain_qdrant import QdrantVectorStore
 
-        client = QdrantClient(url=settings.QDRANT_URL)
+        client = QdrantClient(url=settings.QDRANT_URL, api_key=settings.QDRANT_API_KEY)
         exists = client.collection_exists(settings.VECTOR_COLLECTION_NAME)
         if exists and fresh:
             client.delete_collection(settings.VECTOR_COLLECTION_NAME)
@@ -44,9 +44,22 @@ def get_vectordb(
                 settings.VECTOR_COLLECTION_NAME,
                 vectors_config=VectorParams(size=embedding_dim, distance=Distance.COSINE),
             )
+        _ensure_doc_key_index(client, settings.VECTOR_COLLECTION_NAME)
         return QdrantVectorStore(client=client, collection_name=settings.VECTOR_COLLECTION_NAME, embedding=embeddings)
 
     raise ValueError(f"Unknown VECTOR_DB_BACKEND: {settings.VECTOR_DB_BACKEND!r}")
+
+
+def _ensure_doc_key_index(client, collection_name: str) -> None:
+    from qdrant_client.models import PayloadSchemaType
+
+    if "metadata.doc_key" in (client.get_collection(collection_name).payload_schema or {}):
+        return
+    client.create_payload_index(
+        collection_name=collection_name,
+        field_name="metadata.doc_key",
+        field_schema=PayloadSchemaType.KEYWORD,
+    )
 
 
 def to_store_id(settings: Settings, chunk_id: str) -> Union[str, int]:
