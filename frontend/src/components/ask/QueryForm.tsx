@@ -2,6 +2,7 @@ import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import ModeSelector from "@/components/ask/ModeSelector";
+import MicButton from "@/components/ask/MicButton";
 import type { RetrievalMode } from "@/types/api";
 
 interface QueryFormProps {
@@ -44,10 +45,13 @@ export default function QueryForm({
       />
       <div className="flex flex-wrap items-end justify-between gap-4">
         <ModeSelector mode={mode} onModeChange={onModeChange} k={k} onKChange={onKChange} />
-        <Button type="submit" disabled={isPending || !query.trim()} className="gap-2">
-          <Search className="size-4" />
-          {isPending ? "Working…" : submitLabel}
-        </Button>
+        <div className="flex items-center gap-2">
+          <MicButton onTranscript={onQueryChange} disabled={isPending} />
+          <Button type="submit" disabled={isPending || !query.trim()} className="gap-2">
+            <Search className="size-4" />
+            {isPending ? "Working…" : submitLabel}
+          </Button>
+        </div>
       </div>
     </form>
   );

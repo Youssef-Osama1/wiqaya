@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { formatMs, formatPercent, formatScore, pageRange, sectionBreadcrumb } from "@/lib/format";
+import { formatMs, formatPercent, formatScore, pageRange, sectionBreadcrumb, stripMarkdown } from "@/lib/format";
 import type { ChunkMetadata } from "@/types/api";
 
 const baseMeta: ChunkMetadata = {
@@ -74,5 +74,25 @@ describe("formatMs", () => {
 describe("formatPercent", () => {
   it("formats a 0..1 fraction as a percentage string", () => {
     expect(formatPercent(0.2222)).toBe("22.2%");
+  });
+});
+
+describe("stripMarkdown", () => {
+  it("removes emphasis markers but keeps the words", () => {
+    expect(stripMarkdown("Reduce BP to **150/90 mmHg** for *most* adults.")).toBe(
+      "Reduce BP to 150/90 mmHg for most adults.",
+    );
+  });
+
+  it("leaves intra-word underscores alone, so chunk ids survive being read aloud", () => {
+    expect(stripMarkdown("See who_hypertension_p028 and nice_ng136 for detail.")).toBe(
+      "See who_hypertension_p028 and nice_ng136 for detail.",
+    );
+  });
+
+  it("leaves an unformatted clinical recommendation byte-identical", () => {
+    const prose =
+      "For adults under 80, the clinic blood pressure target is below 140/90 mmHg, while for those aged 80 and over, it is below 150/90 mmHg (HBPM/ABPM targets are lower).";
+    expect(stripMarkdown(prose)).toBe(prose);
   });
 });

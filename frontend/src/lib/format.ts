@@ -46,3 +46,24 @@ const DOC_STRIPE_CLASSES: Record<string, string> = {
 export function docStripeClass(docKey: string): string {
   return DOC_STRIPE_CLASSES[docKey] ?? "border-l-chart-5";
 }
+
+export function stripMarkdown(text: string): string {
+  return text
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`([^`]+)`/g, "$1")
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/^\s{0,3}#{1,6}\s+/gm, "")
+    .replace(/^\s{0,3}>\s?/gm, "")
+    .replace(/^\s{0,3}[-*+]\s+/gm, "")
+    .replace(/\*\*\*(.+?)\*\*\*/g, "$1")
+    .replace(/\*\*(.+?)\*\*/g, "$1")
+    .replace(/\*(.+?)\*/g, "$1")
+    // underscores only count as emphasis at word boundaries -- CommonMark treats
+    // intra-word ones as literal, and identifiers like who_hypertension_p028 rely on that.
+    .replace(/(?<![A-Za-z0-9])___(.+?)___(?![A-Za-z0-9])/g, "$1")
+    .replace(/(?<![A-Za-z0-9])__(.+?)__(?![A-Za-z0-9])/g, "$1")
+    .replace(/(?<![A-Za-z0-9])_(.+?)_(?![A-Za-z0-9])/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
