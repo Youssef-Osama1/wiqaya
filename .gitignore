@@ -31,7 +31,3 @@ docker/volumes/
 # Frontend
 frontend/node_modules/
 frontend/dist/
-
-# AI assistant working notes (repo should read as hand-written)
-CLAUDE.md
-.claude/
